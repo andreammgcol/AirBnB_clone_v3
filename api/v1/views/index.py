@@ -14,16 +14,10 @@ def status():
 @app_views.route('/stats', strict_slashes=False, endpoint='count')
 def stats():
     """ endpoint that retrieves the number of each objects by type """
-    classes = {"City": "cities",
-               "Amenity": "amenities",
-               "Place": "places",
-               "Review": "reviews",
-               "State": "states",
-               "User": "users"}
-
-    my_dict = storage.all()
-    new_dict = {}
-    for key, value in classes.items():
-        if storage.count(key) != 0:
-            new_dict[value] = storage.count(key)
-    return new_dict
+    classes = {'amenities': storage.count('Amenity'),
+               'cities': storage.count('City'),
+               'places': storage.count('Place'),
+               'reviews': storage.count('Review'),
+               'states': storage.count('State'),
+               'users': storage.count('User')}
+    return jsonify(classes)
