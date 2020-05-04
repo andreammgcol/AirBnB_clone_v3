@@ -27,10 +27,11 @@ def get_cities(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_by_Id(city_id):
     """ retrieves one city """
-    aa_city = storage.get(City, city_id)
-    if aa_city is None:
-        abort(404)
-    return jsonify(aa_city.to_dict())
+    theCity = storage.all('City')
+    obj = 'City' + '.' + city_id
+    if obj in theCity.keys():
+        return jsonify(theCity[obj].to_dict())
+    return (abort(404))
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
